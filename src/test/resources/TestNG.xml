@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name=" FedEx Task Automation Test Suite">
+	<listeners>
+		<listener class-name="com.qa.ExtentReport.ExtentReporterNG" />
+	</listeners>
+
+	<test name="FedEx Task assignment">
+		<classes>
+			<class name="com.qa.testcases.LoginTest"></class>
+		</classes>
+	</test>
+</suite>
