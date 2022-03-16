@@ -29,4 +29,9 @@ public class LoginPage extends TestBase {
 		public void insertPassword(String pwd){
 			password.sendKeys(pwd);
 		}
+		
+		public String verifyLoginPageTitle(){
+			return driver.getTitle();
+		}
+		
 }

@@ -1,56 +1,67 @@
 package com.pages;
 
-
 import java.io.IOException;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.FindBy; 
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
 import com.qa.base.TestBase;
 import com.qa.util.TestUtil;
 
-public class HomePage extends TestBase {
+public class HomePage  extends TestBase {
 
 
-	// location popUp
-	@FindBy(xpath = "//div[@role='dialog']/div[@class='fxg-u-modal__wrapper u-scroll-vertical']/div[1]")
+	// Ask FedEx
+	@FindBy(id = "vaHeaderId")
+	WebElement askFedex;
+
+	// account name
+	@FindBy(xpath = "//span[contains(text(),'Pramod')]")
 	WebElement locationPopUp;
 
-	// location 
-	@FindBy(xpath = "//h3[@class='fxg-geo-locator__title js-fxg-geo-title']")
-	WebElement locationTitle;
 
-	@FindBy(xpath = "//span[@class='fxg-geo-locator__button-label'][normalize-space()='English']")
-	WebElement englishButton;
+	// Ask FedEx Virtual Assistant
+	@FindBy(xpath = "//textarea[@class='nw_UserInputField nw_UserInputFocus']")
+	WebElement UserInputField;
 
-	@FindBy(xpath = "//span[@class='fxg-geo-locator__button-label'][normalize-space()='Deutsch']")
-	WebElement deutschButton;
+	// submit button
+	@FindBy(xpath = "//div[contains(text(),'SUBMIT')]")
+	WebElement clickSbumit;
 
-	@FindBy(xpath = "//a[contains(@title,'close')]")
-	WebElement closeButton;
-
-
-	// Cookies
-	@FindBy(xpath = "//button[contains(text(),'ACCEPT ALL COOKIES')]")
-	WebElement acceptAllCookieButton;
+	// submit button
+	@FindBy(xpath = "//div[@class='nw_UserSays']")
+	WebElement verifyUserSays;
 
 
-	@FindBy(xpath = "//label[contains(text(),'Tracking Cookies')]")
-	WebElement  trackingCookiesCheckBox;
+	// close the FedEx Virtual Assistant
+	@FindBy(xpath = "//div[@class='nw_CloseXX']")
+	WebElement clickOnClose;
+
+	// click on shipping
+	@FindBy(xpath = "//span[normalize-space()='Shipping']")
+	WebElement ShippingLink;
 
 
-	// cookies popUp
-	@FindBy(xpath = "//div[@class='fxg-cookie-consent__wrapper u-scroll-vertical']")
-	WebElement cookiespopUp;
+	// click on shipping
+	@FindBy(xpath = "//a[@aria-label='Locations']")
+	WebElement locationLink;
+
+	// input text in search
+	@FindBy(xpath = "//input[@placeholder ='Find locations near...']")
+	WebElement locationsNearByme;
 
 
-	// login button on home page
-	@FindBy(xpath = "//span[contains(text(),'Sign Up/Log In')]")
-	WebElement loginSignUpLink;
+	// click on shipping
+	@FindBy(xpath = "//input[@aria-label ='Search for locations (new window)']")
+	WebElement clickOnsearchBtn;
+	
+	
+	// verify result
+	@FindBy(xpath = "//div[@class='placardDetails']//p[@class='fx-location-address'][contains(text(),'Unterer Zwerchweg 111')]")
+	WebElement verifyLocationResult;
 
-	@FindBy(xpath = "//a[contains(text(),'Log In')]")
-	WebElement loginLink;
 
 	// Initializing the Page Objects:
 	public HomePage() {
@@ -58,50 +69,53 @@ public class HomePage extends TestBase {
 	}
 
 
-	public String verifyHomePageTitle(){
-		return driver.getTitle();
-	}
-
-	public boolean verifyLocationPopup()
+	// verify user is login
+	public boolean verifyAccount()
 	{
 		return locationPopUp.isDisplayed();
 	}
 
-	public String verifyLocationPopUpTitle(){
 
-		return locationTitle.getText();
-	}
-
-	public void clickonEnglish(){
-		englishButton.click();
-	}
-
-	public boolean verifyCookiesPopup()
+	// click on FedEx Virtual Assistant
+	public void clickFedExVirtualAssistant()
 	{
-		return cookiespopUp.isDisplayed();
+		askFedex.click();
 	}
 
-	public void clickTrackcookies(){
-		trackingCookiesCheckBox.click();
+	public void UserInputFieldFedEx(String question)
+	{
+		UserInputField.sendKeys(question);
+		clickSbumit.click();
 	}
 
-	public void clickonAcceptCookies(){
-		acceptAllCookieButton.click();
+	public boolean verifyuserSays()
+	{
+		return verifyUserSays.isDisplayed();
 	}
-
- 
-	public LoginPage clickOnLoginLink() throws IOException
+	
+	public HomePage clickOnLocationLink() throws IOException
 	{ 
 		Actions action = new Actions(driver);
-	    action.moveToElement(loginSignUpLink).build().perform();
+	    action.moveToElement(ShippingLink).build().perform();
 	    
 		// Take screenshot
 		TestUtil.takeScreenshotAtEndOfTest();
 		
-		loginLink.click();
-	    return new LoginPage();  
+		locationLink.click();
+	    return new HomePage();  
 	}
-
-
+	
+	public void inputlocationName(String locationName)
+	{
+		locationsNearByme.sendKeys(locationName);
+		clickOnsearchBtn.click();
+		
+	}
+	
+	// location is display
+	public boolean verifyLocationResult()
+	{
+		return verifyLocationResult.isDisplayed();
+	}
 
 }

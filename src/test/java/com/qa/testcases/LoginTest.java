@@ -6,7 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import com.pages.HomePage;
+import com.pages.LandingPage;
 import com.pages.LoginPage;
 import com.qa.base.TestBase;
 import com.qa.util.TestUtil;
@@ -14,7 +14,7 @@ import com.qa.util.TestUtil;
 
 public class LoginTest extends TestBase {
 	
-	HomePage homePage;
+	LandingPage landingPage;
 	LoginPage loginPage;
 	TestUtil testUtil;
 
@@ -26,17 +26,17 @@ public class LoginTest extends TestBase {
 	public void setUp() {
 		initialization();
 		testUtil = new TestUtil();
-		homePage = new HomePage();
+		landingPage = new LandingPage();
 		loginPage = new LoginPage();
  
 	}
 	
 	@Test(priority = 1)
-	public void verifyHomePageTitleTest() throws InterruptedException {
+	public void verifyLandingPageTitleTest() throws InterruptedException {
 		
 		// Verify title of home page
-		String homePageTitle = homePage.verifyHomePageTitle();
-		Assert.assertEquals(homePageTitle, "Express Delivery, Courier & Shipping Services | FedEx United Kingdom",
+		String landingPageTitle = landingPage.verifyLandingPageTitle();
+		Assert.assertEquals(landingPageTitle, "Express Delivery, Courier & Shipping Services | FedEx United Kingdom",
 				"Ladning page title not matched");
 	}
 	
@@ -45,17 +45,17 @@ public class LoginTest extends TestBase {
 	public void verifyLocationPopupTest() throws IOException {
 
 		// Verify Cookies PopUp
-		Assert.assertTrue(homePage.verifyLocationPopup());
+		Assert.assertTrue(landingPage.verifyLocationPopup());
 		
 		// Take screenshot
 		TestUtil.takeScreenshotAtEndOfTest();
 		
 		// Verify title of home page
-		String CookiesPolicyTitle = homePage.verifyLocationPopUpTitle();
+		String CookiesPolicyTitle = landingPage.verifyLocationPopUpTitle();
 		Assert.assertEquals(CookiesPolicyTitle, "Choose your location", "location title not matched");
 		
 		// Click on location
-		homePage.clickonEnglish();
+		landingPage.clickonEnglish();
 
 	}
 	
@@ -64,37 +64,51 @@ public class LoginTest extends TestBase {
 	public void verifyCookiesPopupTest() throws IOException {
 
 		// Verify Cookies PopUp
-		Assert.assertTrue(homePage.verifyCookiesPopup());
+		Assert.assertTrue(landingPage.verifyCookiesPopup());
 		
 		// Take screenshot
 		TestUtil.takeScreenshotAtEndOfTest();
 		
 		// click on track cookies and accept
-		homePage.clickTrackcookies();
-		homePage.clickonAcceptCookies();
+		landingPage.clickTrackcookies();
+		landingPage.clickonAcceptCookies();
 		 
 	}
 	
-	
 	@Test(priority = 4)
+	public void verifyNotificationTest() throws IOException {
+
+		// Verify Cookies PopUp
+		Assert.assertTrue(landingPage.verifyLocationPopup());
+		
+		// Take screenshot
+		TestUtil.takeScreenshotAtEndOfTest();
+		
+		// verify and close notification
+		landingPage.VerifyNotication();
+		landingPage.closeNotification();
+
+	}
+	
+	
+	
+	@Test(priority = 5)
 	public void fedExLogin() throws IOException {
 
 		// click on login link
-		homePage.clickOnLoginLink();
+		landingPage.clickOnLoginLink();
 		
 		// Verify title of home page
-				String homePageTitle = homePage.verifyHomePageTitle();
-				Assert.assertEquals(homePageTitle, "Log in",
+				String loginPageTitle = loginPage.verifyLoginPageTitle();
+				Assert.assertEquals(loginPageTitle, "Log in",
 						"Login Page title not matched");
 		 
 		loginPage.insertUserId("pramodkokadwar@gmail.com");	
-		loginPage.insertPassword("Greate@123");
+		loginPage.insertPassword("Fedex@12345");
 		
 	}
 	
-	
-	
-	
+
 	
 	@AfterClass
 	public void tearDown() {
